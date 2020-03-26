@@ -1,0 +1,21 @@
+version: '2.0'
+services:
+  sut:
+    build: .
+    # command: run_tests.sh
+    command: /gid/gidx -version
+
+  gid-novnc:
+    build: .
+    image: gid-novnc:latest
+    container_name: gid-novnc
+    ports:
+      # html+vnc ( open with browser)
+      - "8083:8083"
+      # rest-like ( can be used from browser)
+      - "15818:15818"
+      # gid own protocol (socket) client-server
+      - "6900:6900"
+    volumes:
+      - ./data/gid-server-repository:/root/ExternalStorage
+    
