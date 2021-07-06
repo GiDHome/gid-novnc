@@ -1,7 +1,7 @@
 # -*- dockerfile -*-
 
 FROM ubuntu:latest
-MAINTAINER gid@gid.cimne.upc.edu
+LABEL gid@gid.cimne.upc.edu
 
 # Set correct environment variables
 ENV HOME /root
@@ -23,16 +23,18 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 # Installing apps (Note: git is here just in case noVNC needs it in launch.sh
 RUN apt-get update
 RUN apt-get -y install \
+        binutils \
         curl \
         dos2unix \
-	fluxbox \
-	git \
-	git-core \
+        fluxbox \
+        git \
+        git-core \
         libglu1-mesa \
         libharfbuzz0b \
-	supervisor \
-	x11vnc \
-	xvfb \
+        libnss3 \
+        supervisor \
+        x11vnc \
+        xvfb \
         xz-utils \
         zip
 

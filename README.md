@@ -12,6 +12,7 @@ git clone git@bitbucket.org:MiguelPasenau/gid-docker-containers.git
 to build, tag and publish:
 
     docker build -t gid-novnc .
+    ( fresh build ) docker build --no-cache -t gid-novnc .
     docker tag gid-novnc pasenau/gid-novnc:latest
     docker push pasenau/gid-novnc:latest
 
