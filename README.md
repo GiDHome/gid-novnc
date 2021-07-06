@@ -13,6 +13,9 @@ to build, tag and publish:
 
     docker build -t gid-novnc .
     ( fresh build ) docker build --no-cache -t gid-novnc .
+    # test run:
+    docker run -p 8083:8083 --net=bridge -ti gid-novnc 
+    # publishing
     docker tag gid-novnc pasenau/gid-novnc:latest
     docker push pasenau/gid-novnc:latest
 
