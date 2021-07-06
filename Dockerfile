@@ -1,7 +1,9 @@
 # -*- dockerfile -*-
 
 FROM ubuntu:latest
-LABEL gid@gid.cimne.upc.edu
+LABEL version="15.1.1d"
+LABEL org.opencontainers.image.authors="gid@gid.cimne.upc.edu"
+LABEL description="GiD and NoVNC (an HTML VNC client) on port 8083 on ubuntu"
 
 # Set correct environment variables
 ENV HOME /root
