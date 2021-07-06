@@ -1,6 +1,4 @@
 
-git clone git@bitbucket.org:MiguelPasenau/gid-docker-containers.git
-
 # GiD docker containers and services it provides
 
 * [ Build & Run](# Build & Run docker container)
