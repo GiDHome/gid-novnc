@@ -17,9 +17,14 @@ to build, tag and publish:
     docker tag gid-novnc pasenau/gid-novnc:latest
     docker push pasenau/gid-novnc:latest
 
+    docker tag gid-novnc gidhome/gid-novnc:latest
+    docker push gidhome/gid-novnc:latest
+
 to download container (needs *docker login* and account in dockerhub)
 
     docker pull pasenau/gid-novnc:latest
+
+    docker pull gidhome/gid-novnc:latest
 
 to run:
 
