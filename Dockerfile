@@ -1,7 +1,7 @@
 # -*- dockerfile -*-
 
 FROM ubuntu:latest
-LABEL version="15.1.1d"
+LABEL version="15.1.3d"
 LABEL org.opencontainers.image.authors="gid@gid.cimne.upc.edu"
 LABEL description="GiD and NoVNC (an HTML VNC client) on port 8083 on ubuntu"
 
