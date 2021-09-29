@@ -1,14 +1,11 @@
 
 # GiD docker containers and services it provides
 
-* [ Build & Run](# Build & Run docker container)
-* [ Services exposed](# Services)
- * [ Graphical interface in browser](## port 8083)
-
 # Build & Run docker containers
 
 to build, tag and publish:
 
+```shell
     docker build -t gid-novnc .
     ( fresh build ) docker build --no-cache -t gid-novnc .
     # test run:
@@ -19,6 +16,7 @@ to build, tag and publish:
 
     docker tag gid-novnc gidhome/gid-novnc:latest
     docker push gidhome/gid-novnc:latest
+```
 
 to download container (needs *docker login* and account in dockerhub)
 
@@ -46,6 +44,16 @@ on linux/windows:
     docker run -p 8083:8083 \
           -mount type=bind,source="$HOME"/docker-gid-novnc-persistent-files,target=/root/ExternalStorage \
           -ti pasenau/gid-novnc 
+
+## with docker-composer
+
+*docker-compose-home.yml*
+
+    docker-compose -f docker-compose-home.yml up
+
+Mounts folders `./data/home/.gid` and `./data/gid-storage` to preserve models and preferences between sessions.
+
+An initial configuration through http://xxx:8083 may be required.
 
 # Services
 

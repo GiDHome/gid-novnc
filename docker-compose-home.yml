@@ -1,10 +1,5 @@
 version: '2.0'
 services:
-  sut:
-    build: .
-    # command: run_tests.sh
-    command: /gid/gidx -version
-
   gid-novnc:
     build: .
     image: gid-novnc:latest
@@ -18,4 +13,5 @@ services:
       - "6900:6900"
     volumes:
       - ./data/gid-storage:/root/ExternalStorage
+      - ./data/home/.gid:/root/.gid
     
