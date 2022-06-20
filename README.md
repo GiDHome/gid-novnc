@@ -2,6 +2,8 @@
 
 Main repository is https://github.com/GiDHome//gid-novnc 
 
+    gid clone git@github.com:GiDHome/gid-novnc.git
+
 # Build & Run docker containers
 
 to build, tag and publish:
@@ -12,39 +14,34 @@ to build, tag and publish:
     # test run:
     docker run -p 8083:8083 --net=bridge -ti gid-novnc 
     # publishing
-    docker tag gid-novnc pasenau/gid-novnc:latest
-    docker push pasenau/gid-novnc:latest
-
     docker tag gid-novnc gidhome/gid-novnc:latest
     docker push gidhome/gid-novnc:latest
 ```
 
 to download container (needs *docker login* and account in dockerhub)
 
-    docker pull pasenau/gid-novnc:latest
-
     docker pull gidhome/gid-novnc:latest
 
 to run:
 
-    docker run -p 8083:8083 --net=bridge -ti pasenau/gid-novnc 
+    docker run -p 8083:8083 -ti gidhome/gid-novnc 
 
 to run with persistent location (external $HOME/docker-gid-novnc-persistent-files will be mounted inside the image on /root/ExternalStorage):
 
     docker run -p 8083:8083 \
        --mount type=bind,source="$HOME"/docker-gid-novnc-persistent-files,target=/root/ExternalStorage \
-       -ti pasenau/gid-novnc 
+       -ti gidhome/gid-novnc 
     
 with an interactive shell:
 
-    docker run -p 8083:8083 --net=bridge -ti pasenau/gid-novnc /bin/bash
+    docker run -p 8083:8083 -ti gidhome/gid-novnc /bin/bash
     
 on linux/windows:
 
-    docker pull pasenau/gid-novnc:latest
+    docker pull gidhome/gid-novnc:latest
     docker run -p 8083:8083 \
           -mount type=bind,source="$HOME"/docker-gid-novnc-persistent-files,target=/root/ExternalStorage \
-          -ti pasenau/gid-novnc 
+          -ti gidhome/gid-novnc 
 
 **to allow mounting gid cloud folers**
 
