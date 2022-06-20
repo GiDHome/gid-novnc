@@ -1,3 +1,3 @@
-docker build -t gid-novnc .
-echo docker tag gid-novnc pasenau/gid-novnc:latest
-echo docker push pasenau/gid-novnc:latest
+docker build -t gid-novnc --no-cache -f ./Dockerfile
+echo docker tag gid-novnc gidhome/gid-novnc:latest
+echo docker push gidhome/gid-novnc:latest

@@ -14,10 +14,12 @@ cd "$gid_path"
 # tar -zxvf gid14.0.2-linux-x64.tar.gz
 # rm gid14.0.2-linux-x64.tar.gz
 # cd gid14.0.2-x64
-VERSION=15.1.3d
+VERSION=15.1.6d
 TARFILENAME=gid${VERSION}-linux-x64.tar.xz
 # wget --progress=dot:mega https://www.gidhome.com/archive/GiD_Developer_Versions/Linux/amd64/${TARFILENAME}
-curl https://www.gidhome.com/archive/GiD_Developer_Versions/Linux/amd64/${TARFILENAME} -o ${TARFILENAME}
+# www.gidhome.com/archive has been moved (http code 302)
+# adding '-L' so that curl follows the redirection
+curl -L https://www.gidhome.com/archive/GiD_Developer_Versions/Linux/amd64/${TARFILENAME} -o ${TARFILENAME}
 
 tar -Jxvf ${TARFILENAME}
 rm ${TARFILENAME}

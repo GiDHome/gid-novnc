@@ -1,5 +1,6 @@
-
 # GiD docker containers and services it provides
+
+Main repository is https://github.com/GiDHome//gid-novnc 
 
 # Build & Run docker containers
 
@@ -45,6 +46,10 @@ on linux/windows:
           -mount type=bind,source="$HOME"/docker-gid-novnc-persistent-files,target=/root/ExternalStorage \
           -ti pasenau/gid-novnc 
 
+**to allow mounting gid cloud folers**
+
+    docker run -p 8083:8083 -ti --device /dev/fuse --cap-add SYS_ADMIN --security-opt apparmor:unconfined gid-novnc
+    
 ## with docker-composer
 
 *docker-compose-home.yml*

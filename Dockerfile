@@ -1,7 +1,7 @@
 # -*- dockerfile -*-
 
 FROM ubuntu:latest
-LABEL version="15.1.3d"
+LABEL version="15.1.6d"
 LABEL org.opencontainers.image.authors="gid@gid.cimne.upc.edu"
 LABEL description="GiD and NoVNC (an HTML VNC client) on port 8083 on ubuntu"
 
@@ -29,16 +29,21 @@ RUN apt-get -y install \
         curl \
         dos2unix \
         fluxbox \
+        fuse \
         git \
         git-core \
         libglu1-mesa \
         libharfbuzz0b \
+        liblzma5 \
         libnss3 \
+        lzma \
         supervisor \
         x11vnc \
         xvfb \
         xz-utils \
         zip
+
+# fuse is needed by wdfs to mount gid cloud folder
 
 #	wget 
 #	curl
