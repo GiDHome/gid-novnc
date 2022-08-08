@@ -12,7 +12,17 @@ to build, tag and publish:
     docker build -t gid-novnc .
     ( fresh build ) docker build --no-cache -t gid-novnc .
     # test run:
-    docker run -p 8083:8083 --net=bridge -ti gid-novnc 
+    docker run -p 8083:8083 gid-novnc 
+    # eventually add '--net=bridge -ti' before gid-novnc
+    # to mount GiD Cloud folder, container needs to run with privileges:
+    # https://stackoverflow.com/questions/48402218/fuse-inside-docker
+    docker run -p 8083:8083 \
+           --rm \
+           --device /dev/fuse \
+           --cap-add SYS_ADMIN \
+           --security-opt apparmor:unconfined \
+           gid-novnc
+    # if it fails, try --privileged
     # publishing
     docker tag gid-novnc gidhome/gid-novnc:latest
     docker push gidhome/gid-novnc:latest
