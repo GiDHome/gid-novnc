@@ -1,7 +1,7 @@
 # -*- dockerfile -*-
 
-FROM ubuntu:latest
-LABEL version="16.1.0d"
+FROM ubuntu:20.04
+LABEL version="16.1.3d"
 LABEL org.opencontainers.image.authors="gid@gid.cimne.upc.edu"
 LABEL description="GiD and NoVNC (an HTML VNC client) on port 8083 on ubuntu"
 
@@ -23,7 +23,7 @@ ENV SCREEN_RESOLUTION 1280x800
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Installing apps (Note: git is here just in case noVNC needs it in launch.sh
-RUN apt-get update
+RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
 RUN apt-get -y install \
         binutils \
         curl \
