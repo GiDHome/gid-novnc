@@ -14,7 +14,7 @@ cd "$gid_path"
 # tar -zxvf gid14.0.2-linux-x64.tar.gz
 # rm gid14.0.2-linux-x64.tar.gz
 # cd gid14.0.2-x64
-VERSION=16.1.3d
+VERSION=16.1.4d
 TARFILENAME=gid${VERSION}-linux-x64.tar.xz
 # wget --progress=dot:mega https://www.gidhome.com/archive/GiD_Developer_Versions/Linux/amd64/${TARFILENAME}
 # www.gidhome.com/archive has been moved (http code 302)
