@@ -1,7 +1,7 @@
 # -*- dockerfile -*-
 
 FROM ubuntu:20.04
-LABEL version="16.1.5d"
+LABEL version="16.1.6d"
 LABEL org.opencontainers.image.authors="gid@gid.cimne.upc.edu"
 LABEL description="GiD and NoVNC (an HTML VNC client) on port 8083 on ubuntu"
 
@@ -27,6 +27,7 @@ RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
 RUN apt-get -y install \
         binutils \
         curl \
+        davfs2 \
         dos2unix \
         fluxbox \
         fuse \
@@ -43,7 +44,8 @@ RUN apt-get -y install \
         xz-utils \
         zip
 
-# fuse is needed by wdfs to mount gid cloud folder
+# fuse is needed by davfs / wdfs to mount gid cloud folder
+# davfs2 added mount option, performs better than wdfs, but in kernel space.
 
 #	wget 
 #	curl
