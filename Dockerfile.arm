@@ -1,7 +1,7 @@
 # -*- dockerfile -*-
 
 FROM ubuntu:latest
-LABEL version="16.1.0d"
+LABEL version="16.1.9d"
 LABEL org.opencontainers.image.authors="gid@gid.cimne.upc.edu"
 LABEL description="GiD and NoVNC (an HTML VNC client) on port 8083 on ubuntu"
 
@@ -23,10 +23,11 @@ ENV SCREEN_RESOLUTION 1280x800
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
 # Installing apps (Note: git is here just in case noVNC needs it in launch.sh
-RUN apt-get update
+RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
 RUN apt-get -y install \
         binutils \
         curl \
+        davfs2 \
         dos2unix \
         fluxbox \
         fuse \
@@ -43,7 +44,8 @@ RUN apt-get -y install \
         xz-utils \
         zip
 
-# fuse is needed by wdfs to mount gid cloud folder
+# fuse is needed by davfs / wdfs to mount gid cloud folder
+# davfs2 added mount option, performs better than wdfs, but in kernel space.
 
 #	wget 
 #	curl
@@ -58,8 +60,6 @@ RUN apt-get autoclean
 # Docker's supervisor
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY install_gid_arm.sh /root/install_gid.sh
-RUN mkdir -p /gid/
-COPY gid16.1.0d-linux-arm-x64.tar.xz /gid/gid16.1.0d-linux-arm-x64.tar.xz
 COPY create-basic-preferences.sh /root/create-basic-preferences.sh
 RUN dos2unix /etc/supervisor/conf.d/supervisord.conf
 RUN dos2unix /root/install_gid.sh
