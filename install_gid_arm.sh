@@ -14,7 +14,7 @@ cd "$gid_path"
 # tar -zxvf gid14.0.2-linux-x64.tar.gz
 # rm gid14.0.2-linux-x64.tar.gz
 # cd gid14.0.2-x64
-VERSION=16.1.9d
+VERSION=16.1.10d
 TARFILENAME=gid${VERSION}-linux-arm-x64.tar.xz
 
 # # TARFILENAME is in this same directory
