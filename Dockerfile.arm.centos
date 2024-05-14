@@ -1,0 +1,125 @@
+# -*- dockerfile -*-
+
+FROM centos:centos8
+# centos:latest now is === centos8
+LABEL version="16.1.10d"
+LABEL org.opencontainers.image.authors="gid@gid.cimne.upc.edu"
+LABEL description="GiD and NoVNC (an HTML VNC client) on port 8083 on ubuntu"
+
+# Set correct environment variables
+ENV HOME /root
+ENV DEBIAN_FRONTEND noninteractive
+ENV LC_ALL C.UTF-8
+# ENV LANG en_US.UTF-8
+# ENV LANGUAGE en_US.UTF-8
+# to use en_US.UTF-8 folowwing is needed:
+# RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
+#    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
+
+ENV LANG C.UTF-8
+ENV LANGUAGE C.UTF-8
+ENV TZ=Europe/Madrid
+ENV SCREEN_RESOLUTION 1280x800
+
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
+# Installing apps (Note: git is here just in case noVNC needs it in launch.sh
+# centos8 is not officialy maintained, so change repository to vault.centos....
+# https://netshopisp.medium.com/how-to-fix-error-failed-to-download-metadata-for-repo-in-centos-8-89417658c8f7
+RUN cd /etc/yum.repos.d/ && \
+        sed -i 's/mirrorlist/#mirrorlist/g' /etc/yum.repos.d/CentOS-* && \
+        sed -i 's|#baseurl=http://mirror.centos.org|baseurl=http://vault.centos.org|g' /etc/yum.repos.d/CentOS-* && \
+        yum update -y
+
+RUN yum -y install epel-release && yum update -y
+
+#         gnu-free-fonts-common \
+#         gnu-free-mono-fonts \
+#         gnu-free-sans-fonts \
+#         gnu-free-serif-fonts \
+#         liberation-fonts-common \
+#         liberation-fonts \
+#         liberation-mono-fonts \
+#         liberation-narrow-fonts \
+#         liberation-sans-fonts \
+#         liberation-serif-fonts \
+# 
+RUN yum -y install \
+        binutils \
+        curl \
+        davfs2 \
+        dejavu-sans-fonts \
+        dos2unix \
+        fluxbox \
+        fuse \
+        git \
+        git-core \
+        less \
+        mesa-libGLU \
+        supervisor \
+        urw-fonts \
+        vim \
+        which \
+        x11vnc \
+        xorg-x11-fonts-Type1 \
+        xorg-x11-fonts-75dpi \
+        xorg-x11-server-Xvfb \
+        xterm \
+        xz-libs \
+        xz \
+        zip
+
+RUN yum clean all
+
+# fuse is needed by davfs / wdfs to mount gid cloud folder
+# davfs2 added mount option, performs better than wdfs, but in kernel space.
+
+#	wget 
+#	curl
+#	net-tools
+#	x11-xserver-utils
+# x11-server-utils to install  xrandr
+# x11-utils        to install  xdpyinfo
+
+# House cleaning
+
+# Docker's supervisor
+# COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY supervisord.conf /etc/supervisord.conf
+COPY install_gid_arm_ubuntu18.sh /root/install_gid.sh
+COPY create-basic-preferences.sh /root/create-basic-preferences.sh
+# RUN dos2unix /etc/supervisor/conf.d/supervisord.conf
+RUN dos2unix /etc/supervisord.conf
+RUN dos2unix /root/install_gid.sh
+RUN dos2unix /root/create-basic-preferences.sh
+
+# supervisord.conf launches "/gid/gid -t ::gid_rest::server::start"
+# dst_path = /gid
+
+WORKDIR /root/
+RUN chmod 755 ./install_gid.sh && \
+    ./install_gid.sh /gid
+RUN chmod 755 ./create-basic-preferences.sh && \
+    ./create-basic-preferences.sh /gid
+
+# Set display
+ENV DISPLAY :0
+
+# Change work directory to add novnc files
+WORKDIR /root/
+# ADD noVNC-0.6.2 /root/novnc/
+# RUN ln -s /root/novnc/vnc_auto.html /root/novnc/index.html 
+ADD noVNC-1.1.0 /root/novnc/
+# line ending conversions, if build host is windows....
+RUN zip -r novnc.zip novnc && \
+        unzip -ao novnc.zip && \
+        rm novnc.zip
+RUN ln -s /root/novnc/vnc_lite.html /root/novnc/index.html 
+
+# Expose Port (Note: if you change it do it as well in surpervisord.conf)
+# **port 8083** is the http://xxx:8083 vnc-like visualization of GiD application in a graphical environment
+# **port 15818** is the http:// image-server of GiD
+# **port 6900** is GiD's own communication protocol to enable gid-client <----> gid-server communication
+EXPOSE 8083 15818 6900
+
+CMD ["/usr/bin/supervisord"]
