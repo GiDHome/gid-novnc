@@ -86,7 +86,7 @@ RUN yum clean all
 # Docker's supervisor
 # COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
 COPY supervisord.conf /etc/supervisord.conf
-COPY install_gid_arm_ubuntu18.sh /root/install_gid.sh
+COPY install_gid_arm_centos7.sh /root/install_gid.sh
 COPY create-basic-preferences.sh /root/create-basic-preferences.sh
 # RUN dos2unix /etc/supervisor/conf.d/supervisord.conf
 RUN dos2unix /etc/supervisord.conf

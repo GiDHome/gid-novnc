@@ -39,11 +39,15 @@ RUN apt-get -y install \
         libnss3 \
         lzma \
         supervisor \
+        x11-xserver-utils \
         x11vnc \
+        xterm \
         xvfb \
         xz-utils \
         zip
 
+# x11-xserver-utils for xrandr & co.
+# xterm for xterm
 # fuse is needed by davfs / wdfs to mount gid cloud folder
 # davfs2 added mount option, performs better than wdfs, but in kernel space.
 
