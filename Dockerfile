@@ -6,19 +6,19 @@ LABEL org.opencontainers.image.authors="gid@gid.cimne.upc.edu"
 LABEL description="GiD and NoVNC (an HTML VNC client) on port 8083 on ubuntu"
 
 # Set correct environment variables
-ENV HOME /root
-ENV DEBIAN_FRONTEND noninteractive
-ENV LC_ALL C.UTF-8
+ENV HOME=/root
+ENV DEBIAN_FRONTEND=noninteractive
+ENV LC_ALL=C.UTF-8
 # ENV LANG en_US.UTF-8
 # ENV LANGUAGE en_US.UTF-8
 # to use en_US.UTF-8 folowwing is needed:
 # RUN apt-get update && apt-get install -y locales && rm -rf /var/lib/apt/lists/* \
 #    && localedef -i en_US -c -f UTF-8 -A /usr/share/locale/locale.alias en_US.UTF-8
 
-ENV LANG C.UTF-8
-ENV LANGUAGE C.UTF-8
+ENV LANG=C.UTF-8
+ENV LANGUAGE=C.UTF-8
 ENV TZ=Europe/Madrid
-ENV SCREEN_RESOLUTION 1280x800
+ENV SCREEN_RESOLUTION=1280x800
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
@@ -77,7 +77,7 @@ RUN chmod 755 ./create-basic-preferences.sh && \
     ./create-basic-preferences.sh /gid
 
 # Set display
-ENV DISPLAY :0
+ENV DISPLAY=:0
 
 # Change work directory to add novnc files
 WORKDIR /root/
