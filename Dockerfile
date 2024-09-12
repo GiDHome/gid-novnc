@@ -41,6 +41,8 @@ RUN apt-get -y install \
         supervisor \
         x11vnc \
         xvfb \
+        x11-utils \
+        x11-xserver-utils \
         xz-utils \
         zip
 
