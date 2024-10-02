@@ -22,7 +22,8 @@ ENV SCREEN_RESOLUTION=1280x800
 
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 
-# Installing apps (Note: git is here just in case noVNC needs it in launch.sh
+# Installing apps
+# (Note: git is here just in case noVNC needs it in launch.sh (noVNC-1.1.0) / novnc_proxy (noVNC-1.5.0)
 RUN apt-get update && apt-get upgrade -y && apt-get autoremove -y
 RUN apt-get -y install \
         binutils \
@@ -83,7 +84,7 @@ ENV DISPLAY=:0
 WORKDIR /root/
 # ADD noVNC-0.6.2 /root/novnc/
 # RUN ln -s /root/novnc/vnc_auto.html /root/novnc/index.html 
-ADD noVNC-1.1.0 /root/novnc/
+ADD noVNC-1.5.0 /root/novnc/
 # line ending conversions, if build host is windows....
 RUN zip -r novnc.zip novnc && \
         unzip -ao novnc.zip && \
